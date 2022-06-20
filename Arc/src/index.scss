@@ -1,0 +1,54 @@
+// entry file for css
+
+
+
+#overlay{
+  border: 2px solid black;
+  //need to figure out how to stretch the content to fill screen  -- currently defined in javascript file
+
+  position: absolute; 
+  left: 0; 
+  top: 0; 
+  z-index: 1; 
+  background-color: transparent;
+}
+
+button.play {
+  position: absolute;
+  top: 110px;
+  left: 400;
+  font-size: 30px;
+  z-index: 0;
+  border: black  5 px;
+  padding: 5px 5px;
+}
+
+button.destroy {
+  position: absolute;
+  z-index: 0;
+  top: 110px;
+  left: 70px;
+  font-size: 30px;
+  border: black 5 px;
+  padding: 5px 5px;
+}
+
+button.start {
+  position: absolute;
+  z-index: 0;
+  top: 110px;
+  left: 200px;
+  font-size: 30px;
+  border: black 5 px;
+  padding: 5px 5px;
+}
+
+button.start2 {
+  position: absolute;
+  z-index: 0;
+  top: 110px;
+  left: 370px;
+  font-size: 30px;
+  border: black 5 px;
+  padding: 5px 5px;
+}
