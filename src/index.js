@@ -3,7 +3,8 @@
 // const Level1 = require("./level1.js")
 import {level1} from "./scripts/level1.js"
 import { level2 } from "./scripts/level2.js"
-
+import { level3 } from "./scripts/level3.js"
+import { level4 } from "./scripts/level4.js"
 
 import * as planck from 'planck/dist/planck-with-testbed'
 const canvas1 = document.getElementById('overlay')
