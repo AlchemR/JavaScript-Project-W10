@@ -14,17 +14,21 @@ window.onload = function () {
   const playbutton = document.querySelector('#playbutton')
   const destroybutton = document.querySelector('#destroybutton')
   const startbutton = document.querySelector('#startbutton')
+  const level1flag = document.querySelector('#level1flag')
+
   const startbutton2 = document.querySelector('#startbutton2')
+  const level2flag = document.querySelector('#level2flag')
   const startbutton3 = document.querySelector('#startbutton3')
+  const level3flag = document.querySelector('#level3flag')
   const startbutton4 = document.querySelector('#startbutton4')
-  playbutton.addEventListener('click', () => { testbed.togglePause(); }) // doesnt update text file, might need to look into how to bind later
+  const level4flag = document.querySelector('#level4flag')
+  playbutton.addEventListener('click', () => { testbed.togglePause(); })
   destroybutton.addEventListener('click', () => { console.log("destroy works") ; } )
-  startbutton.addEventListener('click', () => { level1() })
-  startbutton2.addEventListener('click', () => { level2() })
-  startbutton3.addEventListener('click', () => { level3() })
-  startbutton4.addEventListener('click', () => { level4() })
-  window.destroybutton = destroybutton
-  window.playbutton = playbutton
+  startbutton.addEventListener('click', () => { level1(); startbutton.style.display = 'none'; level1flag.style.display = 'none'; })
+  startbutton2.addEventListener('click', () => { level2(); startbutton2.style.display = 'none'; level2flag.style.display = 'none'; })
+  startbutton3.addEventListener('click', () => { level3(); startbutton3.style.display = 'none'; level3flag.style.display = 'none' })
+  startbutton4.addEventListener('click', () => { level4(); startbutton4.style.display = 'none'; level4flag.style.display = 'none' })
+  // window.addEventListener("mouseup", () => {console.log("click")})
 }
 
 
@@ -33,6 +37,13 @@ canvas1.width = innerWidth
 window.context2 = context2
 window.canvas1 = canvas1
 
+let totalscore = 100
+window.totalscore = totalscore
+
+const level1Complete = false
+const level2Complete = false
+const level3Complete = false
+const level4Complete = false
 // import * as planck from '../node_modules/planck/dist/planck-with-testbed'
 
 

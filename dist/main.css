@@ -23,18 +23,19 @@ button.play {
 button.destroy {
   position: absolute;
   z-index: 0;
-  top: 110px;
-  left: 70px;
   font-size: 30px;
   border: black 5 px;
   padding: 5px 5px;
+  display: none;
+}
+
+#destroyflag {
+  display: none;
 }
 
 button.start {
   position: absolute;
   z-index: 0;
-  top: 110px;
-  left: 200px;
   font-size: 30px;
   border: black 5 px;
   padding: 5px 5px;
@@ -43,29 +44,51 @@ button.start {
 button.start2 {
   position: absolute;
   z-index: 0;
-  top: 110px;
-  left: 320px;
+  font-size: 30px;
+  border: black 5 px;
+  padding: 5px 5px;
+  display: none;
+}
+
+#level2flag {
+  display: none;
+}
+
+button.start3 {
+  position: absolute;
+  display: none;
+  z-index: 0;
   font-size: 30px;
   border: black 5 px;
   padding: 5px 5px;
 }
 
-button.start3 {
-  position: absolute;
-  top: 110px;
-  left: 450px;
-  z-index: 0;
-  font-size: 30px;
-  border: black 5 px;
-  padding: 5px 5px;
+#level3flag {
+  display: none;
 }
 
 button.start4 {
   position: absolute;
   z-index: 0;
-  top: 110px;
-  left: 580px;
+  display: none;
   font-size: 30px;
   border: black 5 px;
   padding: 5px 5px;
+}
+
+#level4flag {
+  display: none;
+}
+
+button.realstart5 {
+  position: absolute;
+  z-index: 0;
+  display: none;
+  font-size: 30px;
+  border: black 5 px;
+  padding: 5px 5px;
+}
+
+#realstart5 {
+  display: none;
 }
