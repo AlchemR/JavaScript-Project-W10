@@ -3,43 +3,46 @@
 import * as planck from 'planck/dist/planck-with-testbed'
 
 export function level2() {
-  let breakout = false
-  window.breakout = breakout
-
-  if (!breakout) {
     planck.testbed('Sandbox', function (testbed) {
       // window.canvas = canvas
-      testbed.background = "#222222"
+      testbed.background = "#111111"
       window.planck = planck
       window.testbed = testbed
       //currently doesnt work
-      testbed.width = innerWidth / 4;
-      testbed.height = innerHeight / 4;
-
-      // testbed canvas doesnt work
-      window.ground = ground
-      window.ballBodyDef = ballBodyDef
-
-
+      testbed.speed = 2
+      
+      testbed.width = (innerWidth / 4);
+      testbed.height = (innerHeight / 4);
       testbed.hz = 30;
 
       let pl = planck, Vec2 = pl.Vec2;
-      let world = new pl.World(Vec2(0, -20));
+      let world = new pl.World(Vec2(0, -10));
       let breakout1 = false
       window.breakout1 = breakout1
 
-      // testbed.mouseForce = 1000; 
+      // testbed.mouseForce = 6000; 
       // turns on/off impulses to apply like slingshot
 
-      let COUNT = 2;
+      let COUNT = 4;
 
       let ground = world.createBody();
-      ground.createFixture(pl.Edge(Vec2(-80.0, 0.0), Vec2(200.0, 0.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(200.0, 150.0), Vec2(200.0, 0.0)), 0.0);
-
+      ground.createFixture(pl.Edge(Vec2(-80.0, -80.0), Vec2(200.0, -80.0)), 0.0);
+      ground.createFixture(pl.Edge(Vec2(200.0, 150.0), Vec2(200.0, -80.0)), 0.0);
+      ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(-80.0, -80.0)), 0.0);
+      ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(200.0, 150.0)), 0.0);
+      ground.createFixture(pl.Edge(Vec2(80.0, 30.0), Vec2(200.0, 0.0)), { restitution: 60 }).render = { fill: 'blue', stroke: 'blue' }; ;
+      ground.createFixture(pl.Edge(Vec2(80.0, 30.0), Vec2(200.0, 50.0)), { restitution: 60 }).render = { fill: 'blue', stroke: 'blue' };;
+      
+      ground.createFixture(pl.Edge(Vec2(80.0, 30.0), Vec2(80.0, -40.0)), 0.0);;
+      ground.createFixture(pl.Edge(Vec2(100.0, -80.0), Vec2(200.0, -20.0)), { restitution: 60 }).render = { fill: 'blue', stroke: 'blue' };;
+      // ground.createFixture(pl.Circle(Vec2(100.0, -80.0), 10), { restitution: 60 }).render = {fill: 'blue', stroke: 'blue'}; // bouncy
+      // ground.createFixture(pl.Circle(Vec2(200.0, -40.0), 10), { restitution: 60 }).render = { fill: 'blue', stroke: 'blue' }; // bouncy
+      // ground.createFixture(pl.Box(50, 5, Vec2(150, -60), 60), {restitution: 60}).render = { fill: 'blue', stroke: 'blue' };
+      // .render = { fill: 'blue', stroke: 'blue' }; // bouncy
+      
 
       let ballBodyDef = {
-        position: Vec2(-50, 10),
+        position: Vec2(70, -40),
         bullet: false,
         allowSleep: true,
         linearDamping: .01,
@@ -69,9 +72,12 @@ export function level2() {
         if (ball1.m_destroyed) {
           ball1 = world.createDynamicBody(ballBodyDef);
           ball1.createFixture(pl.Circle(1), ballStartAttr);
-          ball1.render = { fill: 'white', stroke: 'white' };
+          ball1.render = { texture: img };
+          const img = new Image()
+          img.src = "https://upload.wikimedia.org/wikipedia/commons/2/27/Wey_source_farringdon.jpg"
         }
       }
+
       generateShot()
 
       const ball3 = world.createDynamicBody(ballBodyDef);
@@ -80,7 +86,7 @@ export function level2() {
       ball3.render = { fill: 'blue', stroke: 'blue' };
 
 
-      let ball2 = world.createBody(Vec2(150, 10));
+      let ball2 = world.createBody(Vec2(82,-25));
       ball2.createFixture(pl.Circle(1), ballFinishAttr);
       ball2.render = { fill: 'red', stroke: 'red' };
 
@@ -95,24 +101,21 @@ export function level2() {
       window.ball3 = ball3
 
 
+      let a = 2;
+      let box = planck.Box(a, a);
 
+      let x = Vec2(8.0, 8);
+      let y = Vec2();
+      let deltaX = Vec2(0, 4);
+      let deltaY = Vec2(0, 4);
 
+      for (let i = 0; i < COUNT; ++i) {
+        y.set(x);
+          world.createDynamicBody(y).createFixture(box, 5.0);
+          y.add(deltaY);
+        x.add(deltaX);
+      }
 
-
-      // testbed.activeKeys.keydown = function (code, char) {
-      //     switch (char) {
-      //       case 'z':
-      //         console.log("right pressed")
-      //         break;
-      //       case 'left':
-      //         console.log("left pressed")
-      //       break;
-      //       case 'up':
-      //         break;
-      //       case 'down':
-      //         break;
-
-      //     } };
 
       function keylistener() {
         //there is probably a way to do this with a case statement
@@ -130,7 +133,7 @@ export function level2() {
           testbed.togglePause()
         } else if (testbed.activeKeys.fire) {
           generateShot()
-        } else if (testbed.activeKeys.z) { testbed.status('←/→: Accelerate car, ↑/↓: Change spring frequency') }
+        }
 
       }
 
@@ -141,7 +144,7 @@ export function level2() {
       }
 
       function cameraLimitY(yPos) {
-        if ((testbed.y + (testbed.height * .4) > ball1pos.y) && (testbed.y - ((testbed.height - canvas1.height) * .4) < ball1pos.y)) { return true } else { return false }
+        if ((testbed.y + (testbed.height * .4) > ball1pos.y) && ((testbed.y - (testbed.height + canvas1.height) * .4) < ball1pos.y)) { return true } else { return false }
       }
 
       function textOut() {
@@ -180,15 +183,12 @@ export function level2() {
         keylistener()
         textOut()
         finishTouch()
-        if (breakout1) { return false }
       };
 
-      console.log("when is this run")
-      if (!breakout1) { return world; } else { breakout = true; return false }
+return world
     });
   }
-  else { return false }
-}
+
 
 // export {level1};
 // export default;
