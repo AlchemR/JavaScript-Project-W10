@@ -72,8 +72,6 @@ export function level2() {
           ball1.createFixture(pl.Circle(2), ballStartAttr);
           ball1.kingpin = true;
           ball1.render = { fill: 'white' };
-          // const img = new Image()
-          // img.src = "https://upload.wikimedia.org/wikipedia/commons/2/27/Wey_source_farringdon.jpg"
         } else { if (!testbed.isPaused()) { world.destroyBody(ball1); if (levelscore > 0) { levelscore = levelscore - 500 }; testbed.pause() } }
       }
       
@@ -82,6 +80,7 @@ export function level2() {
       const ball3 = world.createDynamicBody(ballBodyDef);
       ball3.setPosition(Vec2(30, 2))
       ball3.createFixture(pl.Circle(2), ballStartAttr);
+      ball3.m_fixtureList.m_restitution = .9
       ball3.render = { fill: 'blue', stroke: 'blue' };
       const ball4 = world.createDynamicBody(ballBodyDef);
 
@@ -96,14 +95,14 @@ export function level2() {
       
       let x = Vec2(8.0, 8);
       let y = Vec2();
-      let deltaX = Vec2(0, 4);
-      let deltaY = Vec2(0, 4);
+      let xplus = Vec2(0, 20);
+      let yplus = Vec2(0,20 );
       
       for (let i = 0; i < COUNT; ++i) {
         y.set(x);
         world.createDynamicBody(y).createFixture(box, 5.0);
-        y.add(deltaY);
-        x.add(deltaX);
+        y.add(yplus);
+        x.add(xplus);
       }
       
       
@@ -130,15 +129,15 @@ export function level2() {
       let ball1pos = ball1.getPosition()
       
       function cameraLimitX(xPos) {
-        if ((testbed.x + (testbed.width * .4) > ball1pos.x) && (testbed.x - (testbed.width * .4) < ball1pos.x)) { return true } else { return false }
+        if ((testbed.x + (testbed.width) > ball1pos.x) && (testbed.x - (testbed.width) < ball1pos.x)) { return true } else { return false }
       }
-      
+
       function cameraLimitY(yPos) {
-        if ((testbed.y + (testbed.height * .4) > ball1pos.y) && ((testbed.y - (testbed.height + canvas1.height) * .4) < ball1pos.y)) { return true } else { return false }
+        if ((testbed.y + (testbed.height * 1) > ball1pos.y) && (testbed.y - ((testbed.height) * 1) < ball1pos.y)) { return true } else { return false }
       }
       
       function textOut() {
-        let scale = 30
+        let scale = 24
         let ballpos = ball1.getPosition()
         context2.clearRect(0, 0, canvas1.width, canvas1.height);
         context2.font = `30px sans-serif`;
@@ -146,6 +145,7 @@ export function level2() {
         context2.fillText(`Paused : ${testbed.isPaused()}`, 600, `${scale}`);
         context2.fillText(`Level Score:${levelscore}`, 600, `${scale * 2}`);
         context2.fillText(`Total Score: ${totalscore}`, 600, `${scale * 3}`);
+        context2.fillText(`← → ↑ ↓: Move Camera`, 550, `${scale * 4.1}`);
       }
       
       
@@ -181,7 +181,7 @@ export function level2() {
       playbutton.style.display = 'block';
       playdiv.style.display = 'block';
       window.testbed1 = testbed
-      playbutton.addEventListener('click', () => { window.testbed.togglePause(); textOut; })
+      playbutton.addEventListener('click', () => { window.testbed1.togglePause(); textOut; })
       
       return world
     });

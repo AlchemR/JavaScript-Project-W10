@@ -15,7 +15,7 @@ export function level4() {
       let world = new pl.World(Vec2(0, -10));
       let levelscore = 10000 // 10K tenative
       testbed.mouseForce = 6000; 
-      // turns on/off impulses to apply like slingshot
+
 
       let COUNT = 1;
       window.addEventListener('click', () => { if (levelscore < 0) { levelscore = 0 } else { levelscore += -500 } });
@@ -44,14 +44,14 @@ export function level4() {
 
       let ballStartAttr = {
         friction: .1,
-        restitution: .5, // bounce
+        restitution: .5, 
         density: 10,
         userData: 'ball'
       };
 
       let ballFinishAttr = {
         friction: .2,
-        restitution: .1, // bounce
+        restitution: .1, 
         density: 1,
         userData: 'finish'
       };
@@ -66,8 +66,6 @@ export function level4() {
           ball1.createFixture(pl.Circle(2), ballStartAttr);
           ball1.kingpin = true;
           ball1.render = { fill: "white" };
-          // const img = new Image()
-          // img.src = "https://upload.wikimedia.org/wikipedia/commons/2/27/Wey_source_farringdon.jpg"
         } else { if (!testbed.isPaused()) { world.destroyBody(ball1); if (levelscore > 0) { levelscore = levelscore - 500 }; testbed.pause() } }
       }
 
@@ -76,6 +74,7 @@ export function level4() {
       const ball3 = world.createDynamicBody(ballBodyDef);
       ball3.setPosition(Vec2(30, 40))
       ball3.createFixture(pl.Circle(2), ballStartAttr);
+      ball3.m_fixtureList.m_restitution = .9
       ball3.render = { fill: 'blue', stroke: 'blue' };
 
 
@@ -89,16 +88,24 @@ export function level4() {
 
       let x = Vec2(160.0, 8);
       let y = Vec2();
-      let deltaX = Vec2(0, 4);
-      let deltaY = Vec2(0, 4);
+      let xplus = Vec2(0, 4);
+      let yplus = Vec2(0, 4);
 
       for (let i = 0; i < COUNT; ++i) {
         y.set(x);
           world.createDynamicBody(y).createFixture(box, 5.0);
-          y.add(deltaY);
-        x.add(deltaX);
+          y.add(yplus);
+        x.add(xplus);
       }
 
+      let spin = world.createDynamicBody(Vec2(0.0, 10.0));
+      spin.createFixture(pl.Box(.5, 10.0), 20.0);
+
+      let joint1 = world.createJoint(pl.RevoluteJoint({
+        motorSpeed: Math.PI,
+        maxMotorTorque: 20000.0,
+        enableMotor: true
+      }, ground, spin, Vec2(0.0, 1.0)));
 
 
       function keylistener() {
@@ -122,15 +129,15 @@ export function level4() {
       let ball1pos = ball1.getPosition()
 
       function cameraLimitX(xPos) {
-        if ((testbed.x + (testbed.width * .4) > ball1pos.x) && (testbed.x - (testbed.width * .4) < ball1pos.x)) { return true } else { return false }
+        if ((testbed.x + (testbed.width) > ball1pos.x) && (testbed.x - (testbed.width) < ball1pos.x)) { return true } else { return false }
       }
 
       function cameraLimitY(yPos) {
-        if ((testbed.y + (testbed.height * .4) > ball1pos.y) && ((testbed.y - (testbed.height + canvas1.height) * .4) < ball1pos.y)) { return true } else { return false }
+        if ((testbed.y + (testbed.height * 1) > ball1pos.y) && (testbed.y - ((testbed.height) * 1) < ball1pos.y)) { return true } else { return false }
       }
 
       function textOut() {
-        let scale = 30
+        let scale = 24
         let ballpos = ball1.getPosition()
         context2.clearRect(0, 0, canvas1.width, canvas1.height);
         context2.font = `30px sans-serif`;
@@ -138,6 +145,8 @@ export function level4() {
         context2.fillText(`Paused : ${testbed.isPaused()}`, 600, `${scale}`);
         context2.fillText(`Level Score:${levelscore}`, 600, `${scale * 2}`);
         context2.fillText(`Total Score: ${totalscore}`, 600, `${scale * 3}`);
+        context2.fillText(`← → ↑ ↓: Move Camera`, 550, `${scale * 4.1}`);
+
       }
 
 
@@ -173,12 +182,10 @@ export function level4() {
       playbutton.style.display = 'block';
       playdiv.style.display = 'block';
       window.testbed3 = testbed
-      playbutton.addEventListener('click', () => { window.testbed.togglePause(); textOut; })
+      playbutton.addEventListener('click', () => { window.testbed3.togglePause(); textOut; })
 
 return world
     });
   }
 
 
-// export {level1};
-// export default;

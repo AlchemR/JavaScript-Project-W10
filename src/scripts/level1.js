@@ -52,14 +52,14 @@ export function level1() {
 
       let ballStartAttr = {
         friction: .1,
-        restitution: .5, // bounce
+        restitution: .5, 
         density: 10,
         userData: 'ball'
       };
 
       let ballFinishAttr = {
         friction: .2,
-        restitution: .1, // bounce
+        restitution: .1, 
         density: 1,
         userData: 'finish'
       };
@@ -83,6 +83,8 @@ export function level1() {
       const ball3 = world.createDynamicBody(ballBodyDef);
       ball3.setPosition(Vec2(30, 2))
       ball3.createFixture(pl.Circle(2), ballStartAttr);
+      ball3.m_fixtureList.m_restitution = .9
+
       ball3.render = { fill: 'blue', stroke: 'blue' };
 
 
@@ -96,14 +98,14 @@ export function level1() {
 
       let x = Vec2(8.0, 8);
       let y = Vec2();
-      let deltaX = Vec2(0, 4);
-      let deltaY = Vec2(0, 4);
+      let xplus = Vec2(0, 4);
+      let yplus = Vec2(0, 4);
 
       for (let i = 0; i < COUNT; ++i) {
         y.set(x);
           world.createDynamicBody(y).createFixture(box, 5.0);
-          y.add(deltaY);
-        x.add(deltaX);
+          y.add(yplus);
+        x.add(xplus);
       }
 
 
@@ -137,7 +139,7 @@ export function level1() {
       }
 
       function textOut() {
-        let scale = 30
+        let scale = 24
         let ballpos = ball1.getPosition()
         context2.clearRect(0, 0, canvas1.width, canvas1.height);
         context2.font = `30px sans-serif`;
@@ -145,6 +147,7 @@ export function level1() {
         context2.fillText(`Paused : ${testbed.isPaused()}`, 600, `${scale}`);
         context2.fillText(`Level Score:${levelscore}`, 600, `${scale * 2}`);
         context2.fillText(`Total Score: ${totalscore}`, 600, `${scale * 3}`);
+        context2.fillText(`← → ↑ ↓: Move Camera`, 550, `${scale * 4.1}`);
       }
 
       function finishTouch() {

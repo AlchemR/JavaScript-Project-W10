@@ -284,7 +284,7 @@ button.start2 {
   width: 100%;
   height: 100%; 
   align-items: center;
-
+text-align-last: center;
 
 }
 
@@ -303,7 +303,7 @@ display: none;
   display: none;
   position: absolute;
   background-image: radial-gradient(white, rgb(13, 13, 145), black);
-  // padding: 50px; 
+text-align: center;
   width: 100%;
   height: 100%;
   align-items: center;
@@ -331,6 +331,7 @@ display: none;
   width: 100%;
   height: 100%; 
   align-items: center;
+  text-align: center;
 }
 
 button.realstart5 {
