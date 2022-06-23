@@ -35,6 +35,7 @@ With this version of Arc
 
 
 Event triggering Collision detection:
+
 To detect collisions, each "frame" that is animated updates the x/y cordinates and force values (velocity, rotation, momentum).  Then with that new cordinate, it must be checked if each instance is touching, and of those touching instances it checks if the bodies touching match the end-case of adding score or ending the level.
 
 
@@ -58,6 +59,7 @@ Future refinement of this mechanic would include: fixing when the async function
 
 the platform has potential to be a much larger game; and solving the handshake between rendering (sync) and collision detection positives(async) would allow this to be a deeper framework for this type of game genre.  This would require using a rendering library.
 
+Future features additions:
 
 * Environmental features:
     * Destructible blocks
