@@ -8,10 +8,10 @@ import { level4 } from "./scripts/level4.js"
 
 import * as planck from 'planck/dist/planck-with-testbed'
 import { start } from "planck/dist/planck-with-testbed"
-const canvas1 = document.getElementById('overlay')
-const context2 = canvas1.getContext('2d')
 
 window.onload = function () {
+  const canvas1 = document.getElementById('overlay')
+  const context2 = canvas1.getContext('2d')
   const intro1 = document.querySelector('#intro1')
   const intro1button = document.querySelector('#intro1button')
   const intro2 = document.querySelector('#intro2')
@@ -35,13 +35,13 @@ window.onload = function () {
   startbutton2.addEventListener('click', () => { level2(); startbutton2.style.display = 'none'; level2flag.style.display = 'none'; })
   startbutton3.addEventListener('click', () => { level3(); startbutton3.style.display = 'none'; level3flag.style.display = 'none' })
   startbutton4.addEventListener('click', () => { level4(); startbutton4.style.display = 'none'; level4flag.style.display = 'none' })
+  canvas1.height = 100
+  canvas1.width = innerWidth
+  window.context2 = context2
+  window.canvas1 = canvas1
 }
 
 
-canvas1.height = 100
-canvas1.width = innerWidth
-window.context2 = context2
-window.canvas1 = canvas1
 
 let totalscore = 100
 window.totalscore = totalscore
