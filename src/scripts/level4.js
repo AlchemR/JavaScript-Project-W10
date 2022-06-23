@@ -2,10 +2,7 @@
 
 import * as planck from 'planck/dist/planck-with-testbed'
 
-window.onload = function () {
-  const startbutton5 = document.querySelector('#realstart5button')
-  const level5flag = document.querySelector('#realstart5')
-}
+
 
 export function level4() {
     planck.testbed('Sandbox', function (testbed) {
@@ -34,13 +31,6 @@ export function level4() {
       ground.createFixture(pl.Edge(Vec2(160.0, -15.0), Vec2(200.0, 0.0)), { restitution: 0, friction: 0 }).render = { fill: 'orange', stroke: 'orange' }; // ground slant
       ground.createFixture(pl.Edge(Vec2(-80.0, -70.0), Vec2(200.0, -70.0)), { friction: 1 }); // ground slide
       ground.createFixture(pl.Edge(Vec2(-80.0, -60.0), Vec2(-75.0, -70.0)), { restitution: 60 }).render = { fill: 'blue', stroke: 'blue' }; // ground slide
-
-      // ground.createFixture(pl.Edge(Vec2(100.0, -80.0), Vec2(200.0, -20.0)), { restitution: 60 }).render = { fill: 'blue', stroke: 'blue' };;
-
-      // ground.createFixture(pl.Circle(Vec2(100.0, -80.0), 10), { restitution: 60 }).render = {fill: 'blue', stroke: 'blue'}; // bouncy
-      // ground.createFixture(pl.Circle(Vec2(200.0, -40.0), 10), { restitution: 60 }).render = { fill: 'blue', stroke: 'blue' }; // bouncy
-      // ground.createFixture(pl.Box(50, 5, Vec2(150, -60), 60), {restitution: 60}).render = { fill: 'blue', stroke: 'blue' };
-      // .render = { fill: 'blue', stroke: 'blue' }; // bouncy
       
 
       let ballBodyDef = {
@@ -73,7 +63,7 @@ export function level4() {
       function generateShot() {
         if (ball1.m_destroyed) {
           ball1 = world.createDynamicBody(ballBodyDef);
-          ball1.createFixture(pl.Circle(1), ballStartAttr);
+          ball1.createFixture(pl.Circle(2), ballStartAttr);
           ball1.kingpin = true;
           ball1.render = { fill: "white" };
           // const img = new Image()
@@ -85,12 +75,12 @@ export function level4() {
 
       const ball3 = world.createDynamicBody(ballBodyDef);
       ball3.setPosition(Vec2(30, 40))
-      ball3.createFixture(pl.Circle(1), ballStartAttr);
+      ball3.createFixture(pl.Circle(2), ballStartAttr);
       ball3.render = { fill: 'blue', stroke: 'blue' };
 
 
       let ball2 = world.createBody(Vec2(130,-40));
-      ball2.createFixture(pl.Circle(1), ballFinishAttr);
+      ball2.createFixture(pl.Circle(2), ballFinishAttr);
       ball2.render = { fill: 'red', stroke: 'red' };
 
 
@@ -140,21 +130,15 @@ export function level4() {
       }
 
       function textOut() {
-        let scale = 20
+        let scale = 30
         let ballpos = ball1.getPosition()
         context2.clearRect(0, 0, canvas1.width, canvas1.height);
-        context2.font = `${scale}px Courier New`;
-        context2.fillStyle = 'blue';
-        context2.fillText(`X POS : ${Math.round(ballpos.x)}`, 20, `${scale}`);
-        context2.fillText(`Y POS :${Math.round(ballpos.y)}`, 20, `${scale * 2}`);
-        context2.fillText(`testbed X POS : ${Math.round(testbed.x)}`, 20, `${scale * 3}`);
-        context2.fillText(`Pause : ${testbed.isPaused()}`, 250, `${scale}`);
-        context2.fillText(`Shot destroyed : ${ball1.m_destroyed}`, 250, `${scale * 2}`);
-        context2.fillText(`levelscore:${levelscore}`, 20, `${scale * 5}`);
-        context2.fillText(`totalscore: ${Math.round(testbed.y)}`, 20, `${scale * 4}`);
-
+        context2.font = `30px sans-serif`;
+        context2.fillStyle = 'white';
+        context2.fillText(`Paused : ${testbed.isPaused()}`, 600, `${scale}`);
+        context2.fillText(`Level Score:${levelscore}`, 600, `${scale * 2}`);
+        context2.fillText(`Total Score: ${totalscore}`, 600, `${scale * 3}`);
       }
-
 
 
       function finishTouch() {
@@ -163,7 +147,7 @@ export function level4() {
           let fB = contact.getFixtureB(), bB = fB.getBody();
           let throwBall = fA.getUserData() === "ball" ? bA : fB.getUserData() === "ball" ? bB : null;
           let finishBall = fA.getUserData() === "finish" ? bA : fB.getUserData() === "finish" ? bB : null;
-          setTimeout(function () { if (throwBall && finishBall) { if (!testbed.isPaused()) { world.destroyBody(throwBall); testbed.pause(); addScore(); textOut(); if (throwBall.kingpin) { console.log("kingpin ball is true"); levelEnd() } } else { console.log("no ball is true") } } }, 1);
+          setTimeout(function () { if (throwBall && finishBall) { if (!testbed.isPaused()) { world.destroyBody(throwBall); testbed.pause(); addScore(); textOut(); if (throwBall.kingpin) { playbutton.style.display = 'block'; levelEnd() } }  } }, 1);
         });
       }
 
@@ -171,6 +155,8 @@ export function level4() {
       function addScore() { return totalscore += levelscore }
 
       function levelEnd() {
+        const startbutton5 = document.querySelector('#realstart5button')
+        const level5flag = document.querySelector('#realstart5')
         level5flag.style.display = 'block';
         startbutton5.style.display = 'block';
         testbed.canvas.remove()
@@ -181,6 +167,13 @@ export function level4() {
         textOut()
         finishTouch()
       };
+
+      const playbutton = document.querySelector('#playbutton')
+      const playdiv = document.querySelector('#playdiv')
+      playbutton.style.display = 'block';
+      playdiv.style.display = 'block';
+      window.testbed3 = testbed
+      playbutton.addEventListener('click', () => { window.testbed.togglePause(); textOut; })
 
 return world
     });

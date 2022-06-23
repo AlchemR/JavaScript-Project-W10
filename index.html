@@ -5,33 +5,113 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <canvas id="overlay"> behind</canvas>
+  <div class="topnav" style="width: inner-width;"> <a href="#linkedin">Linkedin</a> <a href="#github">GitHub</a> <a href="#Indeed">Indeed</a> </div>
+  <canvas id="overlay"></canvas>
   <link rel="stylesheet" href="./dist/main.css" />
   <script src="./dist/main.js"></script>
   <title>Arc</title>
 </head>
 <body>
   <div></div>
-  <div><button class="play" id="playbutton" style="background-color:transparent; color:black; padding: 10px; border-radius: 20px; cursor: pointer;" > <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-play" viewBox="0 0 16 16"> <path d="M6 10.117V5.883a.5.5 0 0 1 .757-.429l3.528 2.117a.5.5 0 0 1 0 .858l-3.528 2.117a.5.5 0 0 1-.757-.43z" /> <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" /> </svg> </button>
+  <div id="playdiv"><button class="play" id="playbutton" style="background-color:transparent; color:white; padding: 10px; border-radius: 20px; cursor: pointer;" > <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-play" viewBox="0 0 16 16"> <path d="M6 10.117V5.883a.5.5 0 0 1 .757-.429l3.528 2.117a.5.5 0 0 1 0 .858l-3.528 2.117a.5.5 0 0 1-.757-.43z" /> <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" /> </svg> </button>
 </div>
 
-<div id="destroyflag" style="position: absolute; background-color: aqua; top: 50%; transform: translate(-50%,-50%); left: 50%; padding: 50px; max-width: 800px; text-align: center; border-radius: 5px;"><button class="destroy" id="destroybutton" style="background-color:transparent; color:black; padding: 10px; border-radius: 20px; cursor: pointer;"> destroy </button></div>
 
-<div id="level1flag" style="position: absolute; background-color: aqua; top: 50%; transform: translate(-50%,-50%); left: 50%; padding: 50px; max-width: 400px; text-align: center; border-radius: 5px;"><button class="start" id="startbutton" style="background-color:transparent; color:black; padding: 10px; border-radius: 20px; cursor: pointer;"> level1 </button></div>
 
-<div id="level2flag" style="position: absolute; background-color: aqua; top: 50%; transform: translate(-50%,-50%); left: 50%; padding: 50px; max-width: 400px; text-align: center; border-radius: 5px;"><button class="start2" id="startbutton2" style="background-color:transparent; color:black; padding: 10px; border-radius: 20px; cursor: pointer;"> level2  </button></div>
 
-<div id="level3flag" style="position: absolute; background-color: aqua; top: 50%; transform: translate(-50%,-50%); left: 50%; padding: 50px; max-width: 400px; text-align: center; border-radius: 5px;"><button class="start3" id="startbutton3" style="background-color:transparent; color:black; padding: 10px; border-radius: 20px; cursor: pointer;"> level 3 </button></div>
 
-<div id="level4flag" style="position: absolute; background-color: aqua; top: 50%; transform: translate(-50%,-50%); left: 50%; padding: 50px; max-width: 400px; text-align: center; border-radius: 5px;"><button class="start4" id="startbutton4" style="background-color:transparent; color:black; padding: 10px; border-radius: 20px; cursor: pointer;"> level 4 </button></div>
+<div class="flip-card" id ="intro1">
+  <style>
+    #grad1 {
+      height: 150px;
+      width: 200px;
+      background-image: radial-gradient(white, blue, black);
+    }
+  </style>
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <h1>Welcome to Arc</h1>
+      <img src="./src/styles/output-onlinepngtools (1).png" alt="Electric Arc" style="width: inner-width;  height:inner-height;">
+    </div>
+    <div class="flip-card-back">
+      <h1>Index</h1>
+      <p>Controls</p>
+      <p>Tips</p>
+      <p>Get Started!</p>
+      <button class="intro1button" id="intro1button">Continue</button>
+      
+    </div>
+  </div>
+</div>
 
-<div id="realstart5" style="position: absolute; background-color: aqua; top: 50%; transform: translate(-50%,-50%); left: 50%; padding: 50px; max-width: 400px; text-align: center; border-radius: 5px;">Start for Real....<br>
+
+<div class="flip-card" id="intro2">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <h1>Click on a Ball and Drag your Cursor in the direction you want to launch</h1>
+      
+      <img src="./src/styles/arc shot.png" alt="arc shot example" style="width:200px;height:200px;">
+    </div>
+    <div class="flip-card-back">
+      <h1>Keyboard Controls</h1>
+      <p>Use the Arrow Keys to adjust the camera</p>
+            <img src="./src/styles/keys.png" alt="keyboard" style="width:100px;height:100px;">
+
+      <p>Play/Pause Button</p>
+
+      <button class="intro2button" id="intro2button">Continue</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="flip-card" id="intro3">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <h1>The white “kingpin” touching the red goal will end the level.</h1>
+      
+      <img src="./src/styles/Goal.png" alt="endgame goal" style="width:270px;height:200px;">
+    </div>
+    <div class="flip-card-back">
+      <h1>If you can get additional balls to the goal before the “kingpin”, you get extra points.</h1>
+        <img src="./src/styles/blue first.png" alt="blue ball going to touch goal first" style="width:275px; height: 200px;">
+      <button class="intro3button" id="intro3button"> continue</button>
+    </div>
+  </div>
+  </div>
+
+
+<div class="flip-card" id="intro4">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <h1>Each level has a fixed number of points to add to your score at the level's end.<br><br><br> <br> Every click on the board
+        subtracts from the level total. 
+      <!-- <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;"> -->
+    </div>
+    <div class="flip-card-back">
+      <h1>Pick your moves carefully!</h1></h1>
+<div id="level1flag"><button class="start" id="startbutton"> level1 </button></div>
+    </div>
+  </div>
+    </div>
+
+
+
+</div>
+
+<div id="level2flag"> <button class="start2" id="startbutton2" style="background-color:transparent; color:black; padding: 10px; border-radius: 20px; cursor: pointer;"> level2  </button></div>
+
+<div id="level3flag" style="position: absolute; background-color: aqua; top: 50%; transform: translate(-50%,-50%); left: 50%; padding: 50px; text-align: center; border-radius: 5px;"><button class="start3" id="startbutton3" style="background-color:transparent; color:black; padding: 10px; border-radius: 20px; cursor: pointer;"> level 3 </button></div>
+
+<div id="level4flag" style="position: absolute; background-color: aqua; top: 50%; transform: translate(-50%,-50%); left: 50%; padding: 50px; text-align: center; border-radius: 5px;"><button class="start4" id="startbutton4" style="background-color:transparent; color:black; padding: 10px; border-radius: 20px; cursor: pointer;"> level 4 </button></div>
+
+<div id="realstart5" style="position: absolute; background-color: aqua; top: 50%; transform: translate(-50%,-50%); left: 50%; padding: 50px; text-align: center; border-radius: 5px;"><br>
   <button class="realstart5button" id="realstart5button"
-    style="background-color:transparent; color:black; padding: 10px; border-radius: 20px; cursor: pointer;"> Start!
+    style="background-color:transparent; color:black; padding: 10px; border-radius: 20px; cursor: pointer;"> Start for Real....
   </button></div>
 
       <!-- <img src="./src/styles/atom.jpeg" display="none"></img> -->
 
-<h1>.</h1>
+<h1></h1>
 </body>
 </html>

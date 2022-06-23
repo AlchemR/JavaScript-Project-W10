@@ -2,16 +2,18 @@
 
 import * as planck from 'planck/dist/planck-with-testbed'
 
-window.onload = function (){
+
+window.onload = function () {
   const startbutton2 = document.querySelector('#startbutton2')
   const level2flag = document.querySelector('#level2flag')
 }
 
 export function level1() {
-    planck.testbed('Sandbox', function (testbed) {
-      let totalscore = totalscore
-      // let totalscore = totalscore ||= 0
-      window.totalscore1 = totalscore
+  planck.testbed('Sandbox', function (testbed) {
+
+
+
+      let totalscore1 = totalscore
       testbed.background = "#111111"
       testbed.speed = 2
       testbed.width = (innerWidth / 4);
@@ -31,7 +33,7 @@ export function level1() {
 
       let ground = world.createBody();
       ground.createFixture(pl.Edge(Vec2(-80.0, 0.0), Vec2(60.0, 0.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(100.0, 0.0), Vec2(200.0, 20.0)), 0.0);
+      ground.createFixture(pl.Edge(Vec2(120.0, 0.0), Vec2(200.0, 20.0)), 0.0);
       ground.createFixture(pl.Edge(Vec2(60.0, 0.0), Vec2(130.0, -30.0)), 0.0);
       ground.createFixture(pl.Edge(Vec2(200.0, -30.0), Vec2(120.0, -80.0)), 0.0);
       ground.createFixture(pl.Edge(Vec2(-80.0, -80.0), Vec2(200.0, -80.0)), 0.0);
@@ -70,11 +72,9 @@ export function level1() {
       function generateShot() {
         if (ball1.m_destroyed) {
           ball1 = world.createDynamicBody(ballBodyDef);
-          ball1.createFixture(pl.Circle(1), ballStartAttr);
+          ball1.createFixture(pl.Circle(2), ballStartAttr);
           ball1.kingpin = true;
-          ball1.render = { texture: img };
-          const img = new Image()
-          img.src = "https://upload.wikimedia.org/wikipedia/commons/2/27/Wey_source_farringdon.jpg"
+          ball1.render = { fill: 'white', stroke: 'white' };
         } else { if (!testbed.isPaused()) {world.destroyBody(ball1); if (levelscore > 0) {levelscore = levelscore - 500}; testbed.pause()}  }
       }
 
@@ -82,12 +82,12 @@ export function level1() {
 
       const ball3 = world.createDynamicBody(ballBodyDef);
       ball3.setPosition(Vec2(30, 2))
-      ball3.createFixture(pl.Circle(1), ballStartAttr);
+      ball3.createFixture(pl.Circle(2), ballStartAttr);
       ball3.render = { fill: 'blue', stroke: 'blue' };
 
 
       let ball2 = world.createBody(Vec2(40,-78));
-      ball2.createFixture(pl.Circle(1), ballFinishAttr);
+      ball2.createFixture(pl.Circle(2), ballFinishAttr);
       ball2.kingpin = false;
       ball2.render = { fill: 'red', stroke: 'red' };
 
@@ -129,31 +129,23 @@ export function level1() {
       let ball1pos = ball1.getPosition()
 
       function cameraLimitX(xPos) {
-        if ((testbed.x + (testbed.width * .4) > ball1pos.x) && (testbed.x - (testbed.width * .4) < ball1pos.x)) { return true } else { return false }
+        if ((testbed.x + (testbed.width ) > ball1pos.x) && (testbed.x - (testbed.width  ) < ball1pos.x)) { return true } else { return false }
       }
 
       function cameraLimitY(yPos) {
-        if ((testbed.y + (testbed.height * .4) > ball1pos.y) && (testbed.y - ((testbed.height ) * .6) < ball1pos.y)) { return true } else { return false }
+        if ((testbed.y + (testbed.height * 1) > ball1pos.y) && (testbed.y - ((testbed.height ) * 1) < ball1pos.y)) { return true } else { return false }
       }
 
       function textOut() {
-        let scale = 20
+        let scale = 30
         let ballpos = ball1.getPosition()
         context2.clearRect(0, 0, canvas1.width, canvas1.height);
-        context2.font = `${scale}px Courier New`;
-        context2.fillStyle = 'blue';
-        context2.fillText(`X POS : ${Math.round(ballpos.x)}`, 20, `${scale}`);
-        context2.fillText(`Y POS :${Math.round(ballpos.y)}`, 20, `${scale * 2}`);
-        context2.fillText(`testbed X POS : ${Math.round(testbed.x)}`, 20, `${scale * 3}`);
-        context2.fillText(`Pause : ${testbed.isPaused()}`, 250, `${scale}`);
-        context2.fillText(`Shot destroyed : ${ball1.m_destroyed}`, 250, `${scale * 2}`);
-        context2.fillText(`levelscore:${levelscore}`, 20, `${scale * 5}`);
-        context2.fillText(`totalscore: ${Math.round(testbed.y)}`, 20, `${scale * 4}`);
-
+        context2.font = `30px sans-serif`;
+        context2.fillStyle = 'white';
+        context2.fillText(`Paused : ${testbed.isPaused()}`, 600, `${scale}`);
+        context2.fillText(`Level Score:${levelscore}`, 600, `${scale * 2}`);
+        context2.fillText(`Total Score: ${totalscore}`, 600, `${scale * 3}`);
       }
-
-
-
 
       function finishTouch() {
         world.on('post-solve', function (contact) {
@@ -161,16 +153,18 @@ export function level1() {
           let fB = contact.getFixtureB(), bB = fB.getBody();
           let throwBall = fA.getUserData() === "ball" ? bA : fB.getUserData() === "ball" ? bB : null;
           let finishBall = fA.getUserData() === "finish" ? bA : fB.getUserData() === "finish" ? bB : null;
-          setTimeout(function () { if (throwBall && finishBall) { if (!testbed.isPaused()) { world.destroyBody(throwBall); testbed.pause(); addScore(); textOut();  if (throwBall.kingpin) {console.log("kingpin ball is true"); levelEnd()} } else { console.log("no ball is true") } } }, 1);
+          setTimeout(function () { if (throwBall && finishBall) { if (!testbed.isPaused()) { world.destroyBody(throwBall); testbed.pause(); addScore(); textOut(); if (throwBall.kingpin) { playbutton.style.display = 'block'; levelEnd() } } } }, 1);
         });
       }
 
-      function addScore(){ return totalscore += levelscore }
+      function addScore(){  totalscore += levelscore }
 
 function levelEnd(){
 level2flag.style.display = 'block';
 startbutton2.style.display = 'block';
-  testbed.canvas.remove()
+playbutton.style.display = 'none';
+playdiv.style.display = 'none';
+testbed.canvas.remove();
 }
 
 
@@ -180,6 +174,13 @@ startbutton2.style.display = 'block';
         textOut()
         finishTouch()
       };
+
+    const playbutton = document.querySelector('#playbutton')
+    const playdiv = document.querySelector('#playdiv')
+    playbutton.style.display = 'block';
+    playdiv.style.display = 'block';
+    window.testbed = testbed
+    playbutton.addEventListener('click', () => { window.testbed.togglePause(); textOut; })
 
 return world
     });
