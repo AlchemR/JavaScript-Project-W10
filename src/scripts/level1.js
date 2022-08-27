@@ -32,14 +32,14 @@ export function level1() {
       
 
       let ground = world.createBody();
-      ground.createFixture(pl.Edge(Vec2(-80.0, 0.0), Vec2(60.0, 0.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(120.0, 0.0), Vec2(200.0, 20.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(60.0, 0.0), Vec2(130.0, -30.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(200.0, -30.0), Vec2(120.0, -80.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(-80.0, -80.0), Vec2(200.0, -80.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(200.0, 150.0), Vec2(200.0, -80.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(-80.0, -80.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(200.0, 150.0)), 0.0);
+      ground.createFixture(pl.Edge(Vec2(-80.0, 0.0), Vec2(60.0, 0.0)), 5.0);
+      ground.createFixture(pl.Edge(Vec2(120.0, 0.0), Vec2(200.0, 20.0)), 5.0);
+      ground.createFixture(pl.Edge(Vec2(60.0, 0.0), Vec2(130.0, -30.0)), 5.0);
+      ground.createFixture(pl.Edge(Vec2(200.0, -30.0), Vec2(120.0, -80.0)), 5.0);
+      ground.createFixture(pl.Edge(Vec2(-80.0, -80.0), Vec2(200.0, -80.0)), 5.0);
+      ground.createFixture(pl.Edge(Vec2(200.0, 150.0), Vec2(200.0, -80.0)), 5.0);
+      ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(-80.0, -80.0)), 5.0);
+      ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(200.0, 150.0)), 5.0);
 
       let ballBodyDef = {
         position: Vec2(-50, 10),
@@ -74,6 +74,7 @@ export function level1() {
           ball1 = world.createDynamicBody(ballBodyDef);
           ball1.createFixture(pl.Circle(2), ballStartAttr);
           ball1.kingpin = true;
+          ball1.stillActive = true;
           ball1.render = { fill: 'white', stroke: 'white' };
         } else { if (!testbed.isPaused()) {world.destroyBody(ball1); if (levelscore > 0) {levelscore = levelscore - 500}; testbed.pause()}  }
       }
@@ -84,12 +85,13 @@ export function level1() {
       ball3.setPosition(Vec2(30, 2))
       ball3.createFixture(pl.Circle(2), ballStartAttr);
       ball3.m_fixtureList.m_restitution = .9
-
+      ball3.stillActive = true;
       ball3.render = { fill: 'blue', stroke: 'blue' };
 
 
       let ball2 = world.createBody(Vec2(40,-78));
       ball2.createFixture(pl.Circle(2), ballFinishAttr);
+      // ball2.createFixture(pl.Circle(4), ballFinishAttr);
       ball2.kingpin = false;
       ball2.render = { fill: 'red', stroke: 'red' };
 
@@ -122,13 +124,14 @@ export function level1() {
           if (cameraLimitY(testbed.y)) { testbed.y -= 2 } else { testbed.y = ball1pos.y }
         } else if (testbed.activeKeys.down) {
           if (cameraLimitY(testbed.y)) { testbed.y += 2 } else { testbed.y = ball1pos.y }
-        } else if (testbed.activeKeys.C) {
+        } else if (testbed.activeKeys.fire) {
           testbed.togglePause()
-        } else if (testbed.activeKeys.fire) { generateShot() }
+        } 
+        // else if (testbed.activeKeys.fire) { generateShot() }
 
       }
 
-      let ball1pos = ball1.getPosition()
+      // let ball1pos = ball1.getPosition()
 
       function cameraLimitX(xPos) {
         if ((testbed.x + (testbed.width ) > ball1pos.x) && (testbed.x - (testbed.width  ) < ball1pos.x)) { return true } else { return false }
@@ -141,13 +144,30 @@ export function level1() {
       function textOut() {
         let scale = 24
         let ballpos = ball1.getPosition()
+        let finishball = ball2.getPosition()
+        let bonusball = ball3.getPosition()
+
         context2.clearRect(0, 0, canvas1.width, canvas1.height);
-        context2.font = `30px sans-serif`;
+        context2.font = `24px sans-serif`;
+        // context2.font = `30px sans-serif`;
         context2.fillStyle = 'white';
+        context2.fillText(`whX: ${(ballpos.x).toFixed(2)}`, 10, `${scale}`);
+        context2.fillText(`whY: ${(ballpos.y).toFixed(2)}`, 10, `${scale *2}`);
+        context2.fillText(`both: ${((ballpos.y <= (finishball.y + 4.5)) && (ballpos.y >= finishball.y - 4.5)) && ((ballpos.x <= (finishball.x + 4.5)) && (ballpos.x >= finishball.x - 4.5)) }`, 10, `${scale *3}`);
+        context2.fillText(`bonusboth: ${((bonusball.y <= (finishball.y + 4.5)) && (bonusball.y >= finishball.y - 4.5)) && ((bonusball.x <= (finishball.x + 4.5)) && (bonusball.x >= finishball.x - 4.5)) }`, 10, `${scale *4}`);
+        if (ball3.stillActive === true) { if (((bonusball.y <= (finishball.y + 4.5)) && (bonusball.y >= finishball.y - 4.5)) && ((bonusball.x <= (finishball.x + 4.5)) && (bonusball.x >= finishball.x - 4.5))) { ball3.stillActive = false; world.destroyBody(ball3); addScore()   } }
+        if (ball1.stillActive === true) { if (((ballpos.y <= (finishball.y + 4.5)) && (ballpos.y >= finishball.y - 4.5)) && ((ballpos.x <= (finishball.x + 4.5)) && (ballpos.x >= finishball.x - 4.5))) { ball1.stillActive = false; world.destroyBody(ball1); addScore(); playbutton.style.display = 'block'; testbed.pause(); levelEnd()  } }
+        // if (ball3.stillActive === true) { if (((bonusball.y <= (finishball.y + 4.5)) && (bonusball.y >= finishball.y - 4.5)) && ((bonusball.x <= (finishball.x + 4.5)) && (bonusball.x >= finishball.x - 4.5))) { ball3.stillActive = false; world.destroyBody(ball3); testbed.pause(); addScore()   } }
+
+        context2.fillText(`redX: ${(finishball.x).toFixed(2)}`, 150, `${scale}`);
+        context2.fillText(`redY: ${(finishball.y).toFixed(2)}`, 150, `${scale *2}`);
+        context2.fillText(`bluX: ${(bonusball.x).toFixed()}`, 300, `${scale}`);
+        context2.fillText(`bluY: ${(bonusball.y).toFixed()}`, 300, `${scale *2}`);
+
         context2.fillText(`Paused : ${testbed.isPaused()}`, 600, `${scale}`);
         context2.fillText(`Level Score:${levelscore}`, 600, `${scale * 2}`);
         context2.fillText(`Total Score: ${totalscore}`, 600, `${scale * 3}`);
-        context2.fillText(`← → ↑ ↓: Move Camera`, 550, `${scale * 4.1}`);
+        context2.fillText(`← → ↑ ↓: Move Camera`, 550, `${scale * 4.5}`);
       }
 
       function finishTouch() {
@@ -175,7 +195,7 @@ testbed.canvas.remove();
       testbed.step = function () {
         keylistener()
         textOut()
-        finishTouch()
+        // finishTouch()
       };
 
     const playbutton = document.querySelector('#playbutton')

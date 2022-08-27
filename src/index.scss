@@ -51,7 +51,7 @@
 
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
-.flip-card {
+.flip-card, .flip-card-active {
   // background-image: radial-gradient(white, rgb(13, 13, 145), black);
   // background-image: url("./styles/istockphoto-498375786-612x612.jpeg");
   width: 600px;
@@ -74,9 +74,14 @@
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card:hover .flip-card-inner {
+// .flip-card:hover .flip-card-inner {
+//   transform: rotateY(180deg);
+// }
+.flip-card-active .flip-card-inner {
   transform: rotateY(180deg);
 }
+
+
 
 /* Position the front and back side */
 .flip-card-front,
@@ -139,13 +144,18 @@ button.play a:active {
 }
 
 
-button.intro1button {
+.intro1button, .intro1button-1 {
 position: absolute;
 background-color:transparent; 
 padding: 10px; 
 border-radius: 20px;
 transform: translate(-50%, -50%);
 top: 80%;
+right: 35%;
+display: none;
+}
+.intro1button-1{
+  display: block;
 }
 
 
@@ -161,7 +171,7 @@ top: 80%;
   border-radius: 5px;
 }
 
-button.intro2button {
+.intro2button, .intro2button-2 {
   position: absolute;
   background-color:transparent;
   color:black;
@@ -190,7 +200,7 @@ button.intro2button a:hover {
   display: none;
 }
 
-button.intro3button {
+.intro3button, .intro3button-3 {
   position: absolute;
   background-color:transparent;
   color:black;
@@ -214,7 +224,7 @@ button.intro3button {
   display: none;
 }
 
-button.intro4button {
+.intro4button, .intro4button-4 {
   position: absolute;
   background-color: transparent;
   color: black;

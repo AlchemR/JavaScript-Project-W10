@@ -77,6 +77,7 @@ export function level3() {
           ball1 = world.createDynamicBody(ballBodyDef);
           ball1.createFixture(pl.Circle(2), ballStartAttr);
           ball1.kingpin = true;
+          ball1.stillActive = true;
           ball1.render = { fill: 'white', stroke: 'white' };
         } else { if (!testbed.isPaused()) { world.destroyBody(ball1); if (levelscore > 0) { levelscore = levelscore - 500 }; testbed.pause() } }
       }
@@ -87,6 +88,7 @@ export function level3() {
       ball3.setPosition(Vec2(30, 2))
       ball3.createFixture(pl.Circle(2), ballStartAttr);
       ball3.m_fixtureList.m_restitution = .9
+      ball3.stillActive = true;
       ball3.render = { fill: 'blue', stroke: 'blue' };
 
 
@@ -143,6 +145,9 @@ export function level3() {
       function textOut() {
         let scale = 24
         let ballpos = ball1.getPosition()
+        let finishball = ball2.getPosition()
+        let bonusball = ball3.getPosition()
+
         context2.clearRect(0, 0, canvas1.width, canvas1.height);
         context2.font = `30px sans-serif`;
         context2.fillStyle = 'white';
@@ -150,6 +155,8 @@ export function level3() {
         context2.fillText(`Level Score:${levelscore}`, 600, `${scale * 2}`);
         context2.fillText(`Total Score: ${totalscore}`, 600, `${scale * 3}`);
         context2.fillText(`← → ↑ ↓: Move Camera`, 550, `${scale * 4.1}`);
+        if (ball3.stillActive === true) { if (((bonusball.y <= (finishball.y + 4.5)) && (bonusball.y >= finishball.y - 4.5)) && ((bonusball.x <= (finishball.x + 4.5)) && (bonusball.x >= finishball.x - 4.5))) { ball3.stillActive = false; world.destroyBody(ball3); addScore() } }
+        if (ball1.stillActive === true) { if (((ballpos.y <= (finishball.y + 4.5)) && (ballpos.y >= finishball.y - 4.5)) && ((ballpos.x <= (finishball.x + 4.5)) && (ballpos.x >= finishball.x - 4.5))) { ball1.stillActive = false; world.destroyBody(ball1); addScore(); playbutton.style.display = 'block'; testbed.pause(); levelEnd() } }
       }
 
 
@@ -182,7 +189,7 @@ export function level3() {
       testbed.step = function () {
         keylistener()
         textOut()
-        finishTouch()
+        // finishTouch()
       };
 
 return world
