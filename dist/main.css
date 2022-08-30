@@ -7,8 +7,6 @@
   top: 50;
   z-index: 1;
   background-color: transparent;
-  max-width: 1200px;
-  min-width: 900px;
 }
 
 .overlay-background {
@@ -39,7 +37,6 @@
   top: 0;
   right: 40%;
   width: 100%;
-  max-width: 1200px;
 }
 
 /* Style the links inside the navigation bar */
@@ -227,6 +224,30 @@ button.intro2button a:hover {
 }
 
 #intro4 {
+  background-image: radial-gradient(white, rgb(13, 13, 145), black);
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  padding: 450px;
+  text-align: center;
+  border-radius: 5px;
+  display: none;
+}
+
+.intro5button, .intro5button-5 {
+  position: absolute;
+  background-color: transparent;
+  color: black;
+  padding: 10px;
+  border-radius: 20px;
+  top: 80%;
+  left: 45%;
+  display: none;
+}
+
+#intro5 {
   background-image: radial-gradient(white, rgb(13, 13, 145), black);
   position: absolute;
   z-index: 1;
