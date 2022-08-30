@@ -34,6 +34,7 @@ window.onload = function () {
   const startbutton4 = document.querySelector('#startbutton4')
   const level4flag = document.querySelector('#level4flag')
  
+  // intro1button1.addEventListener('click', () => { level3(); intro1button1.style.display = 'none'; intro1.style.display = 'none' })
   intro1button1.addEventListener('click', () => { ; intro1button1.style.display = 'none'; intro1button.style.display = 'block'; intro1.classList.add("flip-card-active") })
   intro1button.addEventListener('click', () => { ; intro1.style.display = 'none'; intro2.style.display = 'block'; intro2button.style.display = 'block'; intro1.classList.remove("flip-card-active"); intro2button2.style.display = 'block' }) 
 
@@ -49,6 +50,9 @@ window.onload = function () {
   startbutton3.addEventListener('click', () => { level3(); startbutton3.style.display = 'none'; level3flag.style.display = 'none' })
   startbutton4.addEventListener('click', () => { level4(); startbutton4.style.display = 'none'; level4flag.style.display = 'none' })
   canvas1.height = 100
+  if (innerWidth > 1200) {innerWidth = 1200}
+  if (innerHeight > 780) {innerHeight = 780}
+  // if (innerWidth > 1440) {innerWidth = 1440}
   canvas1.width = innerWidth
   window.context2 = context2
   window.canvas1 = canvas1

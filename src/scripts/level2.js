@@ -28,19 +28,29 @@ export function level2() {
       window.addEventListener('click', () => { if (levelscore < 0) { levelscore = 0 } else { levelscore += -500 } });
       
       let ground = world.createBody();
-      ground.createFixture(pl.Edge(Vec2(-80.0, -80.0), Vec2(200.0, -80.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(200.0, 150.0), Vec2(200.0, -80.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(-80.0, -80.0)), 0.0);
-      ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(200.0, 150.0)), 0.0);
+      // ground.createFixture(pl.Edge(Vec2(-80.0, -80.0), Vec2(200.0, -80.0)), 0.0);
+      // ground.createFixture(pl.Edge(Vec2(200.0, 150.0), Vec2(200.0, -80.0)), 0.0);
+      // ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(-80.0, -80.0)), 0.0);
+      // ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(200.0, 150.0)), 0.0);
+      ground.createFixture(pl.Box(.2, 115, Vec2(200, 35))).render = { stroke: 'white', fill: 'white' }; // side walls R
+      ground.createFixture(pl.Box(.2, 115, Vec2(-80, 35))).render = { stroke: 'white', fill: 'white' }; // side wall L
+      ground.createFixture(pl.Box(140, .2, Vec2(60, -80), .0)).render = { stroke: 'white', fill: 'white' }; // floor
+      ground.createFixture(pl.Box(140, .2, Vec2(60, 150), .0)).render = { stroke: 'white', fill: 'white' }; // roof
+      ground.createFixture(pl.Box(.2, 35, Vec2(80, -5))).render = { stroke: 'white', fill: 'white' }; // side wall L
+
+      
+      ground.createFixture(pl.Edge(Vec2(80.0, 30.0), Vec2(80.0, -40.0)), 0.0);;
+
       ground.createFixture(pl.Edge(Vec2(80.0, 30.0), Vec2(200.0, 0.0)), { restitution: 60 }).render = { fill: 'blue', stroke: 'blue' }; ;
       ground.createFixture(pl.Edge(Vec2(80.0, 30.0), Vec2(200.0, 50.0)), { restitution: 60 }).render = { fill: 'blue', stroke: 'blue' };;
       
-      ground.createFixture(pl.Edge(Vec2(80.0, 30.0), Vec2(80.0, -40.0)), 0.0);;
       ground.createFixture(pl.Edge(Vec2(100.0, -80.0), Vec2(200.0, -20.0)), { restitution: 60 }).render = { fill: 'blue', stroke: 'blue' };;
       
+
+
       
       let ballBodyDef = {
-        position: Vec2(70, -40),
+        position: Vec2(20, -40),
         bullet: false,
         allowSleep: true,
         linearDamping: .01,
@@ -95,15 +105,18 @@ export function level2() {
       let a = 1;
       let box = planck.Box(a, a*7);
       
-      let x = Vec2(8.0, 8);
+      let x = Vec2(60.0, 8);
       let y = Vec2();
-      let xplus = Vec2(0, 20);
+      let xplus = Vec2(2, 20);
       let yplus = Vec2(0,20 );
       
       for (let i = 0; i < COUNT; ++i) {
         y.set(x);
+
+        for (let j = 0; j < COUNT; ++j) {
         world.createDynamicBody(y).createFixture(box, 5.0);
         y.add(yplus);
+      }
         x.add(xplus);
       }
       
@@ -144,12 +157,13 @@ export function level2() {
         let finishball = ball2.getPosition()
         let bonusball = ball3.getPosition()
         context2.clearRect(0, 0, canvas1.width, canvas1.height);
-        context2.font = `30px sans-serif`;
+        context2.font = `28px sans-serif`;
         context2.fillStyle = 'white';
-        context2.fillText(`Paused : ${testbed.isPaused()}`, 600, `${scale}`);
-        context2.fillText(`Level Score:${levelscore}`, 600, `${scale * 2}`);
-        context2.fillText(`Total Score: ${totalscore}`, 600, `${scale * 3}`);
-        context2.fillText(`← → ↑ ↓: Move Camera`, 550, `${scale * 4.1}`);
+        context2.fillText(`Paused : ${testbed.isPaused()}`, (innerWidth / 2.3), `${scale}`);
+        context2.fillText(`Level Score:${levelscore}`, (innerWidth / 2.3), `${scale * 2}`);
+        context2.fillText(`Total Score: ${totalscore}`, (innerWidth / 2.3), `${scale * 3}`);
+        context2.fillText(`← → ↑ ↓: Move Camera`, (innerWidth / 2.5), `${scale * 4}`);
+
         if (ball3.stillActive === true) { if (((bonusball.y <= (finishball.y + 4.5)) && (bonusball.y >= finishball.y - 4.5)) && ((bonusball.x <= (finishball.x + 4.5)) && (bonusball.x >= finishball.x - 4.5))) { ball3.stillActive = false; world.destroyBody(ball3); addScore() } }
         if (ball1.stillActive === true) { if (((ballpos.y <= (finishball.y + 4.5)) && (ballpos.y >= finishball.y - 4.5)) && ((ballpos.x <= (finishball.x + 4.5)) && (ballpos.x >= finishball.x - 4.5))) { ball1.stillActive = false; world.destroyBody(ball1); addScore(); playbutton.style.display = 'block'; testbed.pause(); levelEnd() } }
 

@@ -2,6 +2,12 @@
 
 import * as planck from 'planck/dist/planck-with-testbed'
 
+window.onload = function () {
+  const startbutton4 = document.querySelector('#startbutton4')
+  const level4flag = document.querySelector('#level4flag')
+  const playbutton = document.querySelector('#playbutton')
+  playbutton.addEventListener('click', () => { testbed.togglePause(); })
+}
 
 
 export function level4() {
@@ -21,10 +27,14 @@ export function level4() {
       window.addEventListener('click', () => { if (levelscore < 0) { levelscore = 0 } else { levelscore += -500 } });
 
       let ground = world.createBody();
-      ground.createFixture(pl.Edge(Vec2(-80.0, -80.0), Vec2(200.0, -80.0)), 0.0); // ground
-      ground.createFixture(pl.Edge(Vec2(200.0, 150.0), Vec2(200.0, -80.0)), 0.0); // right
-      ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(-80.0, -80.0)), 0.0); // left
-      ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(200.0, 150.0)), 0.0);  // top
+      // ground.createFixture(pl.Edge(Vec2(-80.0, -80.0), Vec2(200.0, -80.0)), 0.0); // ground
+      // ground.createFixture(pl.Edge(Vec2(200.0, 150.0), Vec2(200.0, -80.0)), 0.0); // right
+      // ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(-80.0, -80.0)), 0.0); // left
+      // ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(200.0, 150.0)), 0.0);  // top
+      ground.createFixture(pl.Box(.2, 115, Vec2(200, 35))).render = { stroke: 'white', fill: 'white' }; // side walls R
+      ground.createFixture(pl.Box(.2, 115, Vec2(-80, 35))).render = { stroke: 'white', fill: 'white' }; // side wall L
+      ground.createFixture(pl.Box(140, .2, Vec2(60, -80), .0)).render = { stroke: 'white', fill: 'white' }; // floor
+      ground.createFixture(pl.Box(140, .2, Vec2(60, 150), .0)).render = { stroke: 'white', fill: 'white' }; // roof
 
       ground.createFixture(pl.Edge(Vec2(-80.0, 40.0), Vec2(150.0, 40.0)), { friction: 0 }).render = { fill: 'orange', stroke: 'orange' }; // ground
       ground.createFixture(pl.Edge(Vec2(-60.0, 5.0), Vec2(185.0, 5.0)), { restitution: 0, friction: 0 }).render = { fill: 'orange', stroke: 'orange' }; // ground slant
@@ -101,13 +111,21 @@ export function level4() {
       }
 
       let spin = world.createDynamicBody(Vec2(0.0, 10.0));
-      spin.createFixture(pl.Box(.5, 10.0), 20.0);
+      spin.createFixture(pl.Box(.5, 10.0, Vec2(35, 0)), 20.0);
+      let spin2 = world.createDynamicBody(Vec2(-30.0, 10.0));
+      spin2.createFixture(pl.Box(.5, 10.0), 2.0);
 
       let joint1 = world.createJoint(pl.RevoluteJoint({
         motorSpeed: Math.PI,
-        maxMotorTorque: 20000.0,
+        maxMotorTorque: -20000.0,
         enableMotor: true
-      }, ground, spin, Vec2(0.0, 1.0)));
+      }, ground, spin, Vec2(35.0, 0.0)));
+      
+      let joint2 = world.createJoint(pl.RevoluteJoint({
+        motorSpeed: Math.PI,
+        maxMotorTorque: 40000.0,
+        enableMotor: true
+      }, ground, spin2, Vec2(-40.0, 20.0)));
 
 
       function keylistener() {
@@ -145,12 +163,12 @@ export function level4() {
         let bonusball = ball3.getPosition()
 
         context2.clearRect(0, 0, canvas1.width, canvas1.height);
-        context2.font = `30px sans-serif`;
+        context2.font = `28px sans-serif`;
         context2.fillStyle = 'white';
-        context2.fillText(`Paused : ${testbed.isPaused()}`, 600, `${scale}`);
-        context2.fillText(`Level Score:${levelscore}`, 600, `${scale * 2}`);
-        context2.fillText(`Total Score: ${totalscore}`, 600, `${scale * 3}`);
-        context2.fillText(`← → ↑ ↓: Move Camera`, 550, `${scale * 4.1}`);
+        context2.fillText(`Paused : ${testbed.isPaused()}`, (innerWidth / 2.3), `${scale}`);
+        context2.fillText(`Level Score:${levelscore}`, (innerWidth / 2.3), `${scale * 2}`);
+        context2.fillText(`Total Score: ${totalscore}`, (innerWidth / 2.3), `${scale * 3}`);
+        context2.fillText(`← → ↑ ↓: Move Camera`, (innerWidth / 2.5), `${scale * 4}`);
         if (ball3.stillActive === true) { if (((bonusball.y <= (finishball.y + 4.5)) && (bonusball.y >= finishball.y - 4.5)) && ((bonusball.x <= (finishball.x + 4.5)) && (bonusball.x >= finishball.x - 4.5))) { ball3.stillActive = false; world.destroyBody(ball3); addScore() } }
         if (ball1.stillActive === true) { if (((ballpos.y <= (finishball.y + 4.5)) && (ballpos.y >= finishball.y - 4.5)) && ((ballpos.x <= (finishball.x + 4.5)) && (ballpos.x >= finishball.x - 4.5))) { ball1.stillActive = false; world.destroyBody(ball1); addScore(); playbutton.style.display = 'block'; testbed.pause(); levelEnd() } }
       }
