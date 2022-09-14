@@ -55,9 +55,7 @@ export function level1() {
     ground.createFixture(pl.Box(140, .2, Vec2(60, 150), .0)).render = { stroke: 'white', fill: 'white' }; // roof
 
     // ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(-80.0, -80.0)) ).render = { width: '10px' };
-    
     // ground.createFixture(pl.Polygon(Vec2(-80.0, 2.0), Vec2(60.0, 60.0), Vec2(60.0, 4.0), Vec2(-80.0, 4.0) )  ).render = { stroke: 'red' };
-    
     // ground.createFixture(pl.Polygon(Vec2(-80.0, 2.0), Vec2(60.0, 2.0), Vec2(60.0, 4.0), Vec2(-80.0, 4.0) )  ).render = { width: '10px' };
     // pl.Box(Vec2(-80.0, 5.0), Vec2(60.0, 10.0)).render = {stroke:"red", fill: 'red'}
     // pl.Box(Vec2(-80.0, 5.0), Vec2(60.0, 10.0)).render = {stroke:"red", fill: 'red'}
