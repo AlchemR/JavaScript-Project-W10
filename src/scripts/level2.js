@@ -28,10 +28,6 @@ export function level2() {
       window.addEventListener('click', () => { if (levelscore < 0) { levelscore = 0 } else { levelscore += -500 } });
       
       let ground = world.createBody();
-      // ground.createFixture(pl.Edge(Vec2(-80.0, -80.0), Vec2(200.0, -80.0)), 0.0);
-      // ground.createFixture(pl.Edge(Vec2(200.0, 150.0), Vec2(200.0, -80.0)), 0.0);
-      // ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(-80.0, -80.0)), 0.0);
-      // ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(200.0, 150.0)), 0.0);
       ground.createFixture(pl.Box(.2, 115, Vec2(200, 35))).render = { stroke: 'white', fill: 'white' }; // side walls R
       ground.createFixture(pl.Box(.2, 115, Vec2(-80, 35))).render = { stroke: 'white', fill: 'white' }; // side wall L
       ground.createFixture(pl.Box(140, .2, Vec2(60, -80), .0)).render = { stroke: 'white', fill: 'white' }; // floor

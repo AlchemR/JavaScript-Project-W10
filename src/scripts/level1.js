@@ -38,13 +38,7 @@ export function level1() {
       
 
       let ground = world.createBody();
-    // ground.createFixture(pl.Edge(Vec2(-80.0, 0.0), Vec2(60.0, 0.0)) ).render = ({ lineWidth: '10', stroke: 'blue' })
-    // ground.createFixture(pl.Edge(Vec2(120.0, 0.0), Vec2(200.0, 20.0)) ).render = { width: '10px' };
-    // ground.createFixture(pl.Edge(Vec2(60.0, 0.0), Vec2(130.0, -30.0)) ).render = { width: '10px' };
-    // ground.createFixture(pl.Edge(Vec2(200.0, -30.0), Vec2(120.0, -80.0)) ).render = { width: '10px' };
-    // ground.createFixture(pl.Edge(Vec2(-80.0, -80.0), Vec2(200.0, -80.0)) ).render = { width: '10px' };
-    // ground.createFixture(pl.Edge(Vec2(200.0, 150.0), Vec2(200.0, -80.0)) ).render = { width: '10px' };
-    // ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(200.0, 150.0)) ).render = { width: '10px' };
+
     ground.createFixture(pl.Box(70, .2, Vec2(-10, 0), 0)).render = { stroke: 'white', fill: 'white' };
     ground.createFixture(pl.Box(41, .2, Vec2(160, 10), -50)).render = { stroke: 'white', fill: 'white' };
     ground.createFixture(pl.Box(38, .2, Vec2(95, -15), -.40)).render = { stroke: 'white', fill: 'white' };
@@ -53,13 +47,6 @@ export function level1() {
     ground.createFixture(pl.Box(.2, 115, Vec2(-80, 35) )).render = { stroke: 'white', fill: 'white' }; // side wall L
     ground.createFixture(pl.Box(140, .2, Vec2(60, -80), .0)).render = { stroke: 'white', fill: 'white' }; // floor
     ground.createFixture(pl.Box(140, .2, Vec2(60, 150), .0)).render = { stroke: 'white', fill: 'white' }; // roof
-
-    // ground.createFixture(pl.Edge(Vec2(-80.0, 150.0), Vec2(-80.0, -80.0)) ).render = { width: '10px' };
-    // ground.createFixture(pl.Polygon(Vec2(-80.0, 2.0), Vec2(60.0, 60.0), Vec2(60.0, 4.0), Vec2(-80.0, 4.0) )  ).render = { stroke: 'red' };
-    // ground.createFixture(pl.Polygon(Vec2(-80.0, 2.0), Vec2(60.0, 2.0), Vec2(60.0, 4.0), Vec2(-80.0, 4.0) )  ).render = { width: '10px' };
-    // pl.Box(Vec2(-80.0, 5.0), Vec2(60.0, 10.0)).render = {stroke:"red", fill: 'red'}
-    // pl.Box(Vec2(-80.0, 5.0), Vec2(60.0, 10.0)).render = {stroke:"red", fill: 'red'}
-      // ground.createFixture(pl.Box(Vec2(-80.0, 15.0), Vec2(200.0, 150.0)), 5.0);
 
       let ballBodyDef = {
         position: Vec2(-50, 10),
@@ -214,6 +201,8 @@ testbed.canvas.remove();
     playdiv.style.display = 'block';
     window.testbed = testbed
     playbutton.addEventListener('click', () => { window.testbed.togglePause(); textOut; })
+
+
 
 return world
     });
